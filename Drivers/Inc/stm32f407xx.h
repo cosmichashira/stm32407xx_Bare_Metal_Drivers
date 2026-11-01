@@ -44,8 +44,6 @@
 #define GPIOG_BASEADDR				(AHB1PERIPH_BASEADDR + 0x1800)
 #define GPIOH_BASEADDR				(AHB1PERIPH_BASEADDR + 0x1C00)
 #define GPIOI_BASEADDR				(AHB1PERIPH_BASEADDR + 0x2000)
-#define GPIOJ_BASEADDR				(AHB1PERIPH_BASEADDR + 0x2400)
-#define GPIOK_BASEADDR				(AHB1PERIPH_BASEADDR + 0x2800)
 
 /*RCC BASE ADDRESS */
 
@@ -133,8 +131,6 @@ typedef struct
 #define GPIOG     ((GPIO_RegDef_t*)GPIOG_BASEADDR)
 #define GPIOH     ((GPIO_RegDef_t*)GPIOH_BASEADDR)
 #define GPIOI     ((GPIO_RegDef_t*)GPIOI_BASEADDR)
-#define GPIOJ     ((GPIO_RegDef_t*)GPIOJ_BASEADDR)
-#define GPIOK     ((GPIO_RegDef_t*)GPIOK_BASEADDR)
 
 
 
@@ -182,51 +178,50 @@ typedef struct
 
 }RCC_RegDef_t;
 
-#define RCC 	((RCC_RegDef_t*)RCC_BASEADDR))
+#define RCC 	((RCC_RegDef_t*)RCC_BASEADDR)
 
 /* CLOCK ENABLE MACRO FOR GPIO A TO K */
 
-#define GPIOA_PCLK_EN()	(RCC->AHB1ENR |= (1<<0))
-#define GPIOB_PCLK_EN()	(RCC->AHB1ENR |= (1<<1))
-#define GPIOC_PCLK_EN()	(RCC->AHB1ENR |= (1<<2))
-#define GPIOD_PCLK_EN()	(RCC->AHB1ENR |= (1<<3))
-#define GPIOE_PCLK_EN()	(RCC->AHB1ENR |= (1<<4))
-#define GPIOF_PCLK_EN()	(RCC->AHB1ENR |= (1<<5))
-#define GPIOG_PCLK_EN()	(RCC->AHB1ENR |= (1<<6))
-#define GPIOH_PCLK_EN()	(RCC->AHB1ENR |= (1<<7))
-#define GPIOI_PCLK_EN()	(RCC->AHB1ENR |= (1<<8))
-#define GPIOJ_PCLK_EN()	(RCC->AHB1ENR |= (1<<9))
-#define GPIOK_PCLK_EN()	(RCC->AHB1ENR |= (1<<10))
+#define GPIOA_PCLK_EN()	(RCC->RCC_AHB1ENR |= (1<<0))
+#define GPIOB_PCLK_EN()	(RCC->RCC_AHB1ENR |= (1<<1))
+#define GPIOC_PCLK_EN()	(RCC->RCC_AHB1ENR |= (1<<2))
+#define GPIOD_PCLK_EN()	(RCC->RCC_AHB1ENR |= (1<<3))
+#define GPIOE_PCLK_EN()	(RCC->RCC_AHB1ENR |= (1<<4))
+#define GPIOF_PCLK_EN()	(RCC->RCC_AHB1ENR |= (1<<5))
+#define GPIOG_PCLK_EN()	(RCC->RCC_AHB1ENR |= (1<<6))
+#define GPIOH_PCLK_EN()	(RCC->RCC_AHB1ENR |= (1<<7))
+#define GPIOI_PCLK_EN()	(RCC->RCC_AHB1ENR |= (1<<8))
+
 
 /* I2C CLOCK ENABLE MACROS */
 
-#define I2C1_CLK_EN()	(RCC->APB1ENR|= (1<<21))
-#define I2C2_CLK_EN()	(RCC->APB1ENR|= (1<<22))
-#define I2C3_CLK_EN()	(RCC->APB1ENR|= (1<<23))
+#define I2C1_CLK_EN()	(RCC->RCC_APB1ENR|= (1<<21))
+#define I2C2_CLK_EN()	(RCC->RCC_APB1ENR|= (1<<22))
+#define I2C3_CLK_EN()	(RCC->RCC_APB1ENR|= (1<<23))
 
 /*SPI CLOCK ENABLE MACROS */
-#define SPI1_CLK_EN()	(RCC->APB2ENR)|=(1<<12)
-#define SPI2_CLK_EN()	(RCC->APB1ENR|= (1<<14))
-#define SPI3_CLK_EN()	(RCC->APB1ENR|= (1<<15))
-#define SPI4_CLK_EN()	(RCC->APB2ENR|= (1<<13))
+#define SPI1_CLK_EN()	(RCC->RCC_APB2ENR)|=(1<<12)
+#define SPI2_CLK_EN()	(RCC->RCC_APB1ENR|= (1<<14))
+#define SPI3_CLK_EN()	(RCC->RCC_APB1ENR|= (1<<15))
+#define SPI4_CLK_EN()	(RCC->RCC_APB2ENR|= (1<<13))
 
 /*UART CLOCK ENABLE MACROS */
 
-#define UART4_CLK_EN()	(RCC->APB1ENR|= (1<<19))
-#define UART5_CLK_EN()	(RCC->APB1ENR|= (1<<20))
-#define UART7_CLK_EN()	(RCC->APB1ENR|= (1<<30))
-#define UART8_CLK_EN()	(RCC->APB1ENR|= (1<<31))
+#define UART4_CLK_EN()	(RCC->RCC_APB1ENR|= (1<<19))
+#define UART5_CLK_EN()	(RCC->RCC_APB1ENR|= (1<<20))
+#define UART7_CLK_EN()	(RCC->RCC_APB1ENR|= (1<<30))
+#define UART8_CLK_EN()	(RCC->RCC_APB1ENR|= (1<<31))
 
 /*CAN BUS CLOCK ENABLE MACROS */
 
-#define CAN1_CLK_EN()	(RCC->APB1ENR|= (1<<25))
-#define CAN2_CLK_EN()	(RCC->APB1ENR|= (1<<26))
+#define CAN1_CLK_EN()	(RCC->RCC_APB1ENR|= (1<<25))
+#define CAN2_CLK_EN()	(RCC->RCC_APB1ENR|= (1<<26))
 
 /*USART CLOCK ENABLE MACROS */
-#define USART1_CLK_EN()	(RCC->APB2ENR|= (1<<4))
-#define USART2_CLK_EN()	(RCC->APB1ENR|= (1<<17))
-#define USART3_CLK_EN()	(RCC->APB1ENR|= (1<<18))
-#define USART6_CLK_EN()	(RCC->APB1ENR|= (1<<5))
+#define USART1_CLK_EN()	(RCC->RCC_APB2ENR|= (1<<4))
+#define USART2_CLK_EN()	(RCC->RCC_APB1ENR|= (1<<17))
+#define USART3_CLK_EN()	(RCC->RCC_APB1ENR|= (1<<18))
+#define USART6_CLK_EN()	(RCC->RCC_APB1ENR|= (1<<5))
 
 /* SYSCFG CLOCK ENABLE MACRO */
 
@@ -235,56 +230,61 @@ typedef struct
 
 /* CLOCK DISABLE MACRO FOR GPIO A TO K */
 
-#define GPIOA_PCLK_DI()	(RCC->AHB1ENR &= ~(1<<0))
-#define GPIOB_PCLK_DI()	(RCC->AHB1ENR &= ~(1<<1))
-#define GPIOC_PCLK_DI()	(RCC->AHB1ENR &= ~(1<<2))
-#define GPIOD_PCLK_DI()	(RCC->AHB1ENR &= ~(1<<3))
-#define GPIOE_PCLK_DI()	(RCC->AHB1ENR &= ~(1<<4))
-#define GPIOF_PCLK_DI()	(RCC->AHB1ENR &= ~(1<<5))
-#define GPIOG_PCLK_DI()	(RCC->AHB1ENR &= ~(1<<6))
-#define GPIOH_PCLK_DI()	(RCC->AHB1ENR &= ~(1<<7))
-#define GPIOI_PCLK_DI()	(RCC->AHB1ENR &= ~(1<<8))
-#define GPIOJ_PCLK_DI()	(RCC->AHB1ENR &= ~(1<<9))
-#define GPIOK_PCLK_DI()	(RCC->AHB1ENR &= ~(1<<10))
+#define GPIOA_PCLK_DI()	(RCC->RCC_AHB1ENR &= ~(1<<0))
+#define GPIOB_PCLK_DI()	(RCC->RCC_AHB1ENR &= ~(1<<1))
+#define GPIOC_PCLK_DI()	(RCC->RCC_AHB1ENR &= ~(1<<2))
+#define GPIOD_PCLK_DI()	(RCC->RCC_AHB1ENR &= ~(1<<3))
+#define GPIOE_PCLK_DI()	(RCC->RCC_AHB1ENR &= ~(1<<4))
+#define GPIOF_PCLK_DI()	(RCC->RCC_AHB1ENR &= ~(1<<5))
+#define GPIOG_PCLK_DI()	(RCC->RCC_AHB1ENR &= ~(1<<6))
+#define GPIOH_PCLK_DI()	(RCC->RCC_AHB1ENR &= ~(1<<7))
+#define GPIOI_PCLK_DI()	(RCC->RCC_AHB1ENR &= ~(1<<8))
+
 
 /* I2C CLOCK DISABLE MACROS */
 
-#define I2C1_CLK_DI()	(RCC->APB1ENR &= ~(1<<21))
-#define I2C2_CLK_DI()	(RCC->APB1ENR &= ~(1<<22))
-#define I2C3_CLK_DI()	(RCC->APB1ENR &= ~(1<<23))
+#define I2C1_CLK_DI()	(RCC->RCC_APB1ENR &= ~(1<<21))
+#define I2C2_CLK_DI()	(RCC->RCC_APB1ENR &= ~(1<<22))
+#define I2C3_CLK_DI()	(RCC->RCC_APB1ENR &= ~(1<<23))
 
 /*SPI CLOCK DISABLE MACROS */
-#define SPI1_CLK_DI()	(RCC->APB2ENR&= ~(1<<12))
-#define SPI2_CLK_DI()	(RCC->APB1ENR&= ~(1<<14))
-#define SPI3_CLK_DI()	(RCC->APB1ENR&= ~(1<<15))
-#define SPI4_CLK_DI()	(RCC->APB2ENR&= ~(1<<13))
+#define SPI1_CLK_DI()	(RCC->RCC_APB2ENR&= ~(1<<12))
+#define SPI2_CLK_DI()	(RCC->RCC_APB1ENR&= ~(1<<14))
+#define SPI3_CLK_DI()	(RCC->RCC_APB1ENR&= ~(1<<15))
+#define SPI4_CLK_DI()	(RCC->RCC_APB2ENR&= ~(1<<13))
 
 /*UART CLOCK DISABLE MACROS */
 
-#define UART4_CLK_DI()	(RCC->APB1ENR &= ~(1<<19))
-#define UART5_CLK_DI()	(RCC->APB1ENR &= ~(1<<20))
-#define UART7_CLK_DI()	(RCC->APB1ENR &= ~(1<<30))
-#define UART8_CLK_DI()	(RCC->APB1ENR &= ~(1<<31))
+#define UART4_CLK_DI()	(RCC->RCC_APB1ENR &= ~(1<<19))
+#define UART5_CLK_DI()	(RCC->RCC_APB1ENR &= ~(1<<20))
+#define UART7_CLK_DI()	(RCC->RCC_APB1ENR &= ~(1<<30))
+#define UART8_CLK_DI()	(RCC->RCC_APB1ENR &= ~(1<<31))
 
 /*CAN BUS CLOCK DISABLE MACROS */
 
-#define CAN1_CLK_DI()	(RCC->APB1ENR &= ~(1<<25))
-#define CAN2_CLK_DI()	(RCC->APB1ENR &= ~(1<<26))
+#define CAN1_CLK_DI()	(RCC->RCC_APB1ENR &= ~(1<<25))
+#define CAN2_CLK_DI()	(RCC->RCC_APB1ENR &= ~(1<<26))
 
 /*USART CLOCK DISABLE MACROS */
-#define USART1_CLK_DI()	(RCC->APB2ENR &= ~(1<<4))
-#define USART2_CLK_DI()	(RCC->APB1ENR &= ~(1<<17))
-#define USART3_CLK_DI()	(RCC->APB1ENR &= ~(1<<18))
-#define USART6_CLK_DI()	(RCC->APB1ENR &= ~(1<<5))
+#define USART1_CLK_DI()	(RCC->RCC_APB2ENR &= ~(1<<4))
+#define USART2_CLK_DI()	(RCC->RCC_APB1ENR &= ~(1<<17))
+#define USART3_CLK_DI()	(RCC->RCC_APB1ENR &= ~(1<<18))
+#define USART6_CLK_DI()	(RCC->RCC_APB1ENR &= ~(1<<5))
 
 /* SYSCFG CLOCK DISABLE MACRO */
 
-#define SYSCFG_CLK_DI()	(RCC->APB2ENR &= ~(1<<14))
+#define SYSCFG_CLK_DI()	(RCC->RCC_APB2ENR &= ~(1<<14))
 
 
 
 
-
+//Some generic macros
+#define ENABLE 			1
+#define DISABLE		  	0
+#define SET 			ENABLE
+#define RESET 			DISABLE
+#define GPIO_PIN_SET 	SET
+#define GPIO_PIN_RESET 	RESET
 
 
 
