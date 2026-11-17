@@ -9,7 +9,34 @@
 #define INC_STM32F407XX_H_
 
 #include <stdint.h>
+
 #define __vo volatile
+
+
+/**********************************START:Processor Specific Details **********************************/
+/*
+ * ARM Cortex Mx Processor NVIC ISERx register Addresses
+ */
+
+#define NVIC_ISER0          ( (__vo uint32_t*)0xE000E100 )
+#define NVIC_ISER1          ( (__vo uint32_t*)0xE000E104 )
+#define NVIC_ISER2          ( (__vo uint32_t*)0xE000E108 )
+#define NVIC_ISER3          ( (__vo uint32_t*)0xE000E10c )
+
+
+/*
+ * ARM Cortex Mx Processor NVIC ICERx register Addresses
+ */
+#define NVIC_ICER0 			((__vo uint32_t*)0XE000E180)
+#define NVIC_ICER1			((__vo uint32_t*)0XE000E184)
+#define NVIC_ICER2  		((__vo uint32_t*)0XE000E188)
+#define NVIC_ICER3			((__vo uint32_t*)0XE000E18C)
+
+//NVIC PR BASE ADDRESS
+
+#define NVIC_PR_BASE_ADDR 	((__vo uint32_t*)0xE000E400)
+
+#define NO_PR_BITS_IMPLEMENTED 4
 
 
 /* define the base address of flash and SRAM */
@@ -116,8 +143,7 @@ typedef struct
 	__vo uint32_t ODR;			/*GPIO port out data register */
 	__vo uint32_t BSRR;			/*GPIO port bit set/reset register */
 	__vo uint32_t LCKR;			/*GPIO port configuration lock register */
-	__vo uint32_t AFRL;			/*GPIO alternate function low register */
-	__vo uint32_t AFRH;			/*GPIO alternate function high register */
+	__vo uint32_t AFR[2];			/*GPIO alternate function high register */
 
 }GPIO_RegDef_t;
 
@@ -131,6 +157,8 @@ typedef struct
 #define GPIOG     ((GPIO_RegDef_t*)GPIOG_BASEADDR)
 #define GPIOH     ((GPIO_RegDef_t*)GPIOH_BASEADDR)
 #define GPIOI     ((GPIO_RegDef_t*)GPIOI_BASEADDR)
+
+
 
 
 
@@ -180,6 +208,61 @@ typedef struct
 
 #define RCC 	((RCC_RegDef_t*)RCC_BASEADDR)
 
+/*Peripheral register defination struct for EXTI */
+
+typedef struct
+{
+	__vo uint32_t		IMR;
+	__vo uint32_t		EMR;
+	__vo uint32_t		RTSR;
+	__vo uint32_t		FTSR;
+	__vo uint32_t		SWIER;
+	__vo uint32_t		PR;
+}EXTI_RegDef_t;
+
+#define EXTI	  ((EXTI_RegDef_t*)EXTI_BASEADDR)
+
+typedef struct
+{
+	__vo uint32_t		MEMRMP;
+	__vo uint32_t		PMC;
+	__vo uint32_t		EXTICR[4];
+	uint32_t			RESERVED[2];
+	__vo uint32_t 		CMPCR;
+	uint32_t			RESERVED2 [2];
+	__vo uint32_t		CFGR;
+}SYSCFG_RegDef_t;
+
+#define SYSCFG ((SYSCFG_RegDef_t*)SYSCFG_BASEADDR)
+
+
+//Macro for portcode (Using C conditional statements)
+
+#define GPIO_BASEADDR_TO_CODE(x)    ((x==GPIOA)  ?0 :\
+									 (x==GPIOB)  ?1 :\
+								     (x==GPIOC)  ?2 :\
+									 (x==GPIOD)  ?3 :\
+								   	 (x==GPIOE)  ?4 :\
+									 (x==GPIOF)  ?5 :\
+									 (x==GPIOG)  ?6 :\
+									 (x==GPIOH)  ?7 :\
+									 (x==GPIOI)  ?8 :0	)
+
+
+/*
+ * IRQ(Interrupt Request) Numbers of STM32F407x MCU
+ * Numbers for other peripherals are missing, will finish when writing drivers for them
+ */
+
+#define IRQ_NO_EXTI0 		6
+#define IRQ_NO_EXTI1 		7
+#define IRQ_NO_EXTI2 		8
+#define IRQ_NO_EXTI3 		9
+#define IRQ_NO_EXTI4 		10
+#define IRQ_NO_EXTI9_5 		23
+#define IRQ_NO_EXTI15_10 	40
+
+
 /* CLOCK ENABLE MACRO FOR GPIO A TO K */
 
 #define GPIOA_PCLK_EN()	(RCC->RCC_AHB1ENR |= (1<<0))
@@ -225,7 +308,7 @@ typedef struct
 
 /* SYSCFG CLOCK ENABLE MACRO */
 
-#define SYSCFG_CLK_EN()	(RCC->APB2ENR|= (1<<14))
+#define SYSCFG_CLK_EN()	(RCC->RCC_APB2ENR|= (1<<14))
 
 
 /* CLOCK DISABLE MACRO FOR GPIO A TO K */
@@ -275,7 +358,17 @@ typedef struct
 
 #define SYSCFG_CLK_DI()	(RCC->RCC_APB2ENR &= ~(1<<14))
 
+// Macro to reset GPIO periphs
 
+#define GPIOA_REG_RESET()                 do{ (RCC-> RCC_AHB1RSTR |= (1<<0));  (RCC-> RCC_AHB1RSTR &= ~(1<<0)) ;} while(0)
+#define GPIOB_REG_RESET()                 do{ (RCC-> RCC_AHB1RSTR |= (1<<1));  (RCC-> RCC_AHB1RSTR &= ~(1<<1)) ;} while(0)
+#define GPIOC_REG_RESET()                 do{ (RCC-> RCC_AHB1RSTR |= (1<<2));  (RCC-> RCC_AHB1RSTR &= ~(1<<2)) ;} while(0)
+#define GPIOD_REG_RESET()                 do{ (RCC-> RCC_AHB1RSTR |= (1<<3));  (RCC-> RCC_AHB1RSTR &= ~(1<<3)) ;} while(0)
+#define GPIOE_REG_RESET()                 do{ (RCC-> RCC_AHB1RSTR |= (1<<4));  (RCC-> RCC_AHB1RSTR &= ~(1<<4)) ;} while(0)
+#define GPIOF_REG_RESET()                 do{ (RCC-> RCC_AHB1RSTR |= (1<<5));  (RCC-> RCC_AHB1RSTR &= ~(1<<5)) ;} while(0)
+#define GPIOG_REG_RESET()                 do{ (RCC-> RCC_AHB1RSTR |= (1<<6));  (RCC-> RCC_AHB1RSTR &= ~(1<<6)) ;} while(0)
+#define GPIOH_REG_RESET()                 do{ (RCC-> RCC_AHB1RSTR |= (1<<7));  (RCC-> RCC_AHB1RSTR &= ~(1<<7)) ;} while(0)
+#define GPIOI_REG_RESET()                 do{ (RCC-> RCC_AHB1RSTR |= (1<<8));  (RCC-> RCC_AHB1RSTR &= ~(1<<8)) ;} while(0)
 
 
 //Some generic macros
@@ -294,7 +387,7 @@ typedef struct
 
 
 
-
+#include "stm32f407xx_gpio_driver.h"
 
 
 
